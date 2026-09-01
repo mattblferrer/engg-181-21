@@ -11,13 +11,14 @@ endmodule
 module tb_mos_basics;
   integer i, j, k;
   reg[0:0] state[0:3];
-  reg p_drain, p_gate;
-  wire p_source;
 
-  pmos p1(p_source, p_drain, p_gate);
-  reg n_drain, n_gate;
-  wire n_source;
-  nmos n1(n_source, n_drain, n_gate);
+  reg p_data, p_control;
+  wire p_out;
+  pmos p1(p_out, p_data, p_control);
+
+  reg n_data, n_control;
+  wire n_out;
+  nmos n1(n_out, n_data, n_control);
 
   reg c_data, c_ncontrol, c_pcontrol;
   wire c_out;
@@ -37,10 +38,10 @@ module tb_mos_basics;
     $display("PMOS Primitive");
     for (i = 0; i < 4; i = i + 1) begin
       for (j = 0; j < 4; j = j + 1) begin
-        p_drain = state[i];
-        p_gate = state[j];
+        p_data = state[i];
+        p_control = state[j];
         #10;
-        $display("drain=%b gate=%b source=%b", p_drain, p_gate, p_source);
+        $display("data=%b control=%b out=%b", p_data, p_control, p_out);
         end
     end
     $display("");
@@ -49,10 +50,10 @@ module tb_mos_basics;
     $display("NMOS Primitive");
     for (i = 0; i < 4; i = i + 1) begin
       for (j = 0; j < 4; j = j + 1) begin
-        n_drain = state[i];
-        n_gate = state[j];
+        n_data = state[i];
+        n_control = state[j];
         #10;
-        $display("drain=%b gate=%b source=%b", n_drain, n_gate, n_source);
+        $display("data=%b control=%b out=%b", n_data, n_control, n_out);
       end
     end
     $display("");
